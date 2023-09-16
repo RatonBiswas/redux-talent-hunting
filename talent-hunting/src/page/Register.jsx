@@ -11,12 +11,19 @@ const initialState = {
 
 const Register = () => {
   const [values, setValues] = useState(initialState);
+
   const handleChange = (e) => {
-    console.log(e.target.value);
+    const name = e.target.name;
+    const value = e.target.value;
+    // Dynamic object Key in javascript
+    setValues({ ...values, [name]: value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      console.log("Please enter all required fields");
+    }
   };
 
   const toggleMember = () => {
@@ -61,7 +68,7 @@ const Register = () => {
         </button>
         <p>
           {values.isMember ? "Not A Member Yet?" : "Already A Member?"}
-          <button onClick={toggleMember} >
+          <button onClick={toggleMember}>
             {values.isMember ? "Register" : "Login"}
           </button>
         </p>
