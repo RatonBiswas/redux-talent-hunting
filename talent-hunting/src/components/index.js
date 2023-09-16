@@ -1,2 +1,3 @@
 import Logo from "./Logo.jsx";
-export { Logo };
+import FormRow from "./FormRow.jsx";
+export { Logo, FormRow };

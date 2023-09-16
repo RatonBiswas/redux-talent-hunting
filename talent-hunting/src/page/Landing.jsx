@@ -1,6 +1,7 @@
-import { Logo } from "../component🍶 ";
+import { Logo } from "../components";
 import main from "../assets/images/main.svg";
 import Wrapper from "../assets/wrappers/LandingPage";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -18,7 +19,9 @@ const Landing = () => {
             talent · Jobster is an AI platform that matches the right people to
             the right jobs
           </p>
-          <button className="btn btn-hero">Login/Register</button>
+          <Link to="/register" className="btn btn-hero">
+            Login/Register
+          </Link>
         </div>
         <img src={main} alt="Job Hunt" className="img main-img" />
       </div>
