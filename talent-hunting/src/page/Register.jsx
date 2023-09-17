@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Wrapper from "../assets/wrappers/LandingPage";
 import { Logo, FormRow } from "../components";
+import { toast } from "react-toastify";
 
 const initialState = {
   name: "",
@@ -22,13 +23,13 @@ const Register = () => {
     e.preventDefault();
     const { name, email, password, isMember } = values;
     if (!email || !password || (!isMember && !name)) {
-      console.log("Please enter all required fields");
+      toast.error("Please fill out all fields");
+      return;
     }
   };
-
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
-    // setValues({...values,isMember:false})
+    // setValues({...values,isMember:false}
   };
 
   return (
@@ -67,8 +68,8 @@ const Register = () => {
           Submit
         </button>
         <p>
-          {values.isMember ? "Not A Member Yet?" : "Already A Member?"}
-          <button onClick={toggleMember}>
+          {values.isMember ? "Not a member yet?" : "Already a member?"}
+          <button type="button" onClick={toggleMember} className="member-btn">
             {values.isMember ? "Register" : "Login"}
           </button>
         </p>

@@ -3,6 +3,8 @@
 // import viteLogo from '/vite.svg'
 import { Landing, Error, Dashboard, Register } from "./page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -26,7 +28,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    // <RouterProvider  />
+    <div>
+      <RouterProvider router={router}/>
+      <ToastContainer position="top-center"/>
+    </div>
     // <BrowserRouter>
     //   <Routes>
     //     <Route path="/" element={<Dashboard />}>
