@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Wrapper from "../assets/wrappers/LandingPage";
 import { Logo, FormRow } from "../components";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, registerUser } from '../features/user/userSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, registerUser } from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   name: "",
@@ -11,13 +12,12 @@ const initialState = {
   password: "",
   isMember: true,
 };
- 
+
 const Register = () => {
   const [values, setValues] = useState(initialState);
-
   const { user, isLoading } = useSelector((store) => store.user);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -33,18 +33,25 @@ const Register = () => {
       return;
     }
     if (isMember) {
-        dispatch(loginUser({ email: email, password: password }));
-        return;
-      }
-      dispatch(registerUser({ name, email, password }));
-    };
-
-
+      dispatch(loginUser({ email: email, password: password }));
+      return;
+    }
+    dispatch(registerUser({ name, email, password }));
+  };
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
     // setValues({...values,isMember:false}
   };
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    }
+  }, [user]);
+
 
   return (
     <Wrapper className="full-page">

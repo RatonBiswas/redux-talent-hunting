@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["Jobster", "reduxjs", "Toastify"]
+  "cSpell.words": [
+    "addjob",
+    "alljobs",
+    "Jobster",
+    "reduxjs",
+    "Sharedlayout",
+    "Toastify"
+  ]
 }
