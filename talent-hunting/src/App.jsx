@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 // import reactLogo from './assets/images/main.svg'
 // import viteLogo from '/vite.svg'
-import { Landing, Error, Register } from "./page";
+import { Landing, Error, Register ,ProtectedRoute} from "./page";
 import {
   AddJob,
   AllJobs,
@@ -16,7 +16,10 @@ import { ToastContainer } from "react-toastify";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SharedLayout />,
+    element: (<ProtectedRoute>
+        <SharedLayout />
+    </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
