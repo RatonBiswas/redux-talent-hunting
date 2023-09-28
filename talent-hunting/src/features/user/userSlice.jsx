@@ -1,24 +1,29 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import customFetch from "../../utils/axios";
-import { addUserToLocalStorage, getUserFromLocalStorage ,removeUserFromLocalStorage} from "../../utils/localStorage";
+import {
+  addUserToLocalStorage,
+  getUserFromLocalStorage,
+  removeUserFromLocalStorage,
+} from "../../utils/localStorage";
 
 const initialState = {
   isLoading: false,
+  isSidebarOpen: false,
   user: getUserFromLocalStorage(),
 };
 
 export const registerUser = createAsyncThunk(
-  'user/registerUser',
+  "user/registerUser",
   async (user, thunkAPI) => {
     try {
-      const resp = await customFetch.post('/auth/register', user);
+      const resp = await customFetch.post("/auth/register", user);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
     }
-  }
-)
+  },
+);
 
 export const loginUser = createAsyncThunk(
   "user/loginUser",
@@ -67,7 +72,11 @@ const userSlice = createSlice({
   //     toast.error(payload);
   //   },
   // },
-
+  reducers: {
+    toggleSidebar : (state)=>{
+      state.isSidebarOpen = !state.isSidebarOpen;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
@@ -97,8 +106,8 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, { payload }) => {
         state.isLoading = false;
         toast.error(payload);
-      })
+      });
   },
 });
-
+export const {toggleSidebar} = userSlice.actions
 export default userSlice.reducer;
