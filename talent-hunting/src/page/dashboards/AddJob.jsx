@@ -1,8 +1,12 @@
 import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import { handleChange } from "../../features/job/jobSlice";
+// import { toast } from "react-toastify";
+import {
+  handleChange,
+  clearValue,
+  createJob,
+} from "../../features/job/jobSlice";
 
 const AddJob = () => {
   const {
@@ -23,15 +27,16 @@ const AddJob = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!position || !company || !jobLocation) {
-      toast.error("Please Fill Up All Values");
+      // toast.error("Please Fill Up All Values");
       return;
     }
+    dispatch(createJob({ position, company, jobLocation, jobType, status }));
   };
 
-  const handleFormValueChange = (e) => {
+  const handleJobInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-
+    console.log(name, value);
     // came from only RTK actions
     dispatch(handleChange({ name, value }));
   };
@@ -44,33 +49,31 @@ const AddJob = () => {
           {/* Position field */}
           <FormRow
             type="text"
-            name="Position"
+            name="position"
             value={position}
-            handleChange={handleFormValueChange}
+            handleChange={handleJobInput}
           />
-
-          {/* Company field */}
+          {/* company */}
           <FormRow
             type="text"
-            name="Company"
+            name="company"
             value={company}
-            handleChange={handleFormValueChange}
+            handleChange={handleJobInput}
           />
-
-          {/* Job Location field */}
+          {/* location */}
           <FormRow
             type="text"
             labelText="job location"
-            name="Job Location"
+            name="jobLocation"
             value={jobLocation}
-            handleChange={handleFormValueChange}
+            handleChange={handleJobInput}
           />
 
           {/* job status */}
           <FormRowSelect
             name="Status"
             value={status}
-            handleChange={handleFormValueChange}
+            handleChange={handleJobInput}
             list={statusOptions}
           />
 
@@ -79,12 +82,16 @@ const AddJob = () => {
             name="jobType"
             labelText="job type"
             value={jobType}
-            handleChange={handleFormValueChange}
+            handleChange={handleJobInput}
             list={jobTypeOptions}
           />
 
           <div className="btn-container">
-            <button type="submit" className="btn btn-block clear-btn">
+            <button
+              type="submit"
+              className="btn btn-block clear-btn"
+              onClick={() => dispatch(clearValue())}
+            >
               Clear
             </button>
             <button

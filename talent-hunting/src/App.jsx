@@ -58,7 +58,7 @@ function App() {
     // <RouterProvider  />
     <div>
       <RouterProvider router={router} />
-      <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" autoClose={500}/>
     </div>
     // <BrowserRouter>
     //   <Routes>
