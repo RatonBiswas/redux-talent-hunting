@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 // import customFetch from "../../utils/axios";
 // import { logoutUser } from "../user/userSlice";
 import { createJobThunk } from "./jobThunk";
+import { getUserFromLocalStorage } from "../../utils/localStorage";
 
 const initialState = {
   isLoading: false,
@@ -32,7 +33,10 @@ const jobSlice = createSlice({
       state[name] = value;
     },
     clearValue: () => {
-      return { ...initialState };
+      return {
+        ...initialState,
+        jobLocation: getUserFromLocalStorage() ? location : "",
+      };
     },
   },
   extraReducers: (builder) => {
