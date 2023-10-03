@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { createSlice } from "@reduxjs/toolkit";
+// import { toast } from "react-toastify";
 // import customFetch from "../../utils/axios";
 // import { logoutUser } from "../user/userSlice";
-import { createJobThunk } from "./allJobsThunk";
-import { getUserFromLocalStorage } from "../../utils/localStorage";
+// import { createJobThunk } from "./allJobsThunk";
+// import { getUserFromLocalStorage } from "../../utils/localStorage";
 
 const initialFilterState = {
     search : '',
@@ -16,7 +16,7 @@ const initialFilterState = {
 const initialState = {
     ...initialFilterState,
     isLoading: false,
-    jobs:[],
+    jobs:[1],
     totalJobs: 0 ,
     numOfPages : 1,
     page: 1,

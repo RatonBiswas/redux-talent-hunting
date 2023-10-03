@@ -1,6 +1,6 @@
 import customFetch from "../../utils/axios";
 import { clearValue } from "./jobSlice";
-import { logoutUser } from "./userSlice";
+import { logoutUser } from "../user/userSlice";
 
 export const createJobThunk = async(url,job,thunkAPI)=>{
     try {
