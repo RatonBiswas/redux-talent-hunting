@@ -3,8 +3,8 @@ import { JobsContainer, SearchContainer } from "../../components";
 const AllJobs = () => {
   return (
     <div>
-      <JobsContainer />
       <SearchContainer />
+      <JobsContainer />
     </div>
   );
 };
