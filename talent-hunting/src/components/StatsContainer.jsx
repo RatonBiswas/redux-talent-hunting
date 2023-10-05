@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from "react-icons/fa";
 import StatItem from "./StatItem";
 import Wrapper from "../assets/wrappers/StatsContainer";

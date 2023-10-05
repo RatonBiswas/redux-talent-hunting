@@ -3,7 +3,7 @@
 import Wrapper from "../assets/wrappers/StatItem";
 const StatItem = ({ count, title, bcg, color, icon }) => {
   return (
-    <Wrapper>
+    <Wrapper color={color} bcg={bcg}>
       <header>
         <span className="count">{count}</span>
         <span className="icon">{icon}</span>
