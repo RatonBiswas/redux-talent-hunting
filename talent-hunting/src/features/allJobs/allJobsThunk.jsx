@@ -1,13 +1,13 @@
 import customFetch from "../../utils/axios";
 // import { clearValue } from "./jobSlice";
 import { logoutUser } from "../user/userSlice";
-import authHeader from "../../utils/AuthHeader";
+// import authHeader from "../../utils/AuthHeader";
 
 
 
 export const getAllJobsThunk = async(url,thunkAPI)=>{
     try {
-        const resp = await customFetch.get(url,authHeader(thunkAPI));
+        const resp = await customFetch.get(url);
         // thunkAPI.dispatch(clearValue());
         return resp.data;
       } catch (error) {

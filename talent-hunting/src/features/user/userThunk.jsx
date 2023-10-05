@@ -1,4 +1,4 @@
-import authHeader from "../../utils/AuthHeader";
+// import authHeader from "../../utils/AuthHeader";
 import customFetch from "../../utils/axios";
 import { logoutUser } from "./userSlice";
 import { toast } from "react-toastify";
@@ -25,7 +25,7 @@ export const loginUserThunk = async(url,user,thunkAPI)=>{
 
 export const updateUserThunk = async(url,user,thunkAPI)=>{
     try {
-        const resp = await customFetch.patch(url, user,authHeader(thunkAPI));
+        const resp = await customFetch.patch(url, user);
         return resp.data;
         // console.log(resp.data);
       } catch (error) {
