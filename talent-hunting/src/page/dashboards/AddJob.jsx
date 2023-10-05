@@ -7,6 +7,7 @@ import {
   handleChange,
   clearValue,
   createJob,
+  editJob
 } from "../../features/job/jobSlice";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
@@ -22,8 +23,8 @@ const AddJob = () => {
     status,
     statusOptions,
     isEditing,
-    createdJobNav
-    // editJobId,
+    createdJobNav,
+    editJobId,
   } = useSelector((store) => store.job);
 
   const { user } = useSelector((store) => store.user);
@@ -34,6 +35,21 @@ const AddJob = () => {
     e.preventDefault();
     if (!position || !company || !jobLocation) {
       // toast.error("Please Fill Up All Values");
+      return;
+    }
+    if(isEditing){
+      dispatch(
+        editJob({
+          jobId: editJobId,
+          job: {
+            position,
+            company,
+            jobLocation,
+            jobType,
+            status,
+          },
+        })
+      );
       return;
     }
     dispatch(createJob({ position, company, jobLocation, jobType, status }));
