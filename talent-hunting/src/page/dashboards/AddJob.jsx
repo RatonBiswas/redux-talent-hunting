@@ -1,6 +1,7 @@
 import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { useSelector, useDispatch } from "react-redux";
+// import {} from 'react-router-dom'
 // import { toast } from "react-toastify";
 import {
   handleChange,
@@ -8,6 +9,7 @@ import {
   createJob,
 } from "../../features/job/jobSlice";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const AddJob = () => {
   const {
@@ -20,6 +22,7 @@ const AddJob = () => {
     status,
     statusOptions,
     isEditing,
+    createdJobNav
     // editJobId,
   } = useSelector((store) => store.job);
 
@@ -34,6 +37,7 @@ const AddJob = () => {
       return;
     }
     dispatch(createJob({ position, company, jobLocation, jobType, status }));
+    
   };
 
   const handleJobInput = (e) => {
@@ -48,6 +52,12 @@ const AddJob = () => {
     if (!isEditing) {
       dispatch(handleChange({ name: "jobLocation", value: user.location }));
     }
+
+    // if (createdJobNav) {
+    //   console.log('/all-jobs');
+    //   return <Navigate to="/all-jobs" />;
+    // }
+    
   }, []);
 
   return (
@@ -106,9 +116,10 @@ const AddJob = () => {
             <button
               type="submit"
               className="btn btn-block submit-btn"
-              disabled={isLoading}
+              // disabled={isLoading}
             >
-              {isLoading ? "Please Wait..." : "Submit"}
+              {isLoading ? "Please Wait..." : "Submit" }
+              {createdJobNav ? <Navigate to='/all-jobs'/> : <Navigate to='/add-job'/>}
             </button>
           </div>
         </div>

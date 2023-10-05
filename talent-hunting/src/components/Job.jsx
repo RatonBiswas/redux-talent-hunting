@@ -5,6 +5,7 @@ import Wrapper from "../assets/wrappers/Job";
 import { useDispatch } from "react-redux";
 import JobInfo from './JobInfo'
 import moment from "moment";
+import { deleteJob, setEditJob } from "../features/job/jobSlice";
 
 const Job = ({
   _id,
@@ -19,7 +20,9 @@ const Job = ({
 
   const date = moment(createdAt).format('MMM Do, YYYY');
   
-
+const handleDelete = ()=>{
+    dispatch(deleteJob(_id))
+}
   return (
     <Wrapper>
       <header>
@@ -42,7 +45,8 @@ const Job = ({
               to="/add-job"
               className="btn edit-btn"
               onClick={() => {
-                console.log("edit Job");
+                // console.log("edit Job");
+                dispatch(setEditJob({editJobId: _id,position,jobLocation,company,jobType,status}))
               }}
             >
               Edit
@@ -50,9 +54,7 @@ const Job = ({
             <button
               type="button"
               className="btn delete-btn"
-              onClick={() => {
-                console.log("edit Job");
-              }}
+              onClick={handleDelete}
             >
               Delete
             </button>

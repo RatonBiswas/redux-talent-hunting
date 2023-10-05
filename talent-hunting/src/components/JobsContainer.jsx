@@ -15,11 +15,6 @@ const JobsContainer = () => {
   
 
   if (isLoading) {
-    // return (
-    //     <Wrapper>
-    //       <h2>Loading...</h2>
-    //     </Wrapper>
-    //   );
     return <Loading center />;
   }
   if (jobs.length === 0) {
