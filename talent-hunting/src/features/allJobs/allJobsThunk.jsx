@@ -9,6 +9,7 @@ export const getAllJobsThunk = async(url,thunkAPI)=>{
     try {
         const resp = await customFetch.get(url);
         // thunkAPI.dispatch(clearValue());
+        console.log(resp.data);
         return resp.data;
       } catch (error) {
         if (error.response.status === 401) {
