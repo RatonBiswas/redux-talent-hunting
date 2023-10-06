@@ -11,7 +11,6 @@ import Job from "./Job.jsx";
 import ChartsContainer from "./ChartsContainer.jsx";
 import StatsContainer from "./StatsContainer.jsx";
 
-
 export {
   Logo,
   FormRow,
