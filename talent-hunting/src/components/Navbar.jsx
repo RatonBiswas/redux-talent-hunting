@@ -1,6 +1,6 @@
 import Wrapper from "../assets/wrappers/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser, toggleSidebar } from "../features/user/userSlice";
+import { clearStore, toggleSidebar } from "../features/user/userSlice";
 import { useState } from "react";
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
 import Logo from "./Logo";
@@ -18,7 +18,7 @@ const Navbar = () => {
     dispatch(toggleSidebar());
   };
   const handleLogoutUser = () => {
-    dispatch(logoutUser());
+    dispatch(clearStore());
   };
   return (
     <Wrapper>

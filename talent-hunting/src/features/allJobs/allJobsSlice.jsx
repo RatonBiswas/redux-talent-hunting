@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllJobsThunk } from "./allJobsThunk";
+import { getAllJobsThunk, showStatsThunk } from "./allJobsThunk";
 import { toast } from "react-toastify";
-import customFetch from "../../utils/axios";
 // import { getUserFromLocalStorage } from "../../utils/localStorage";
 
 const initialFilterState = {
@@ -23,32 +22,9 @@ const initialState = {
   monthlyApplications: [],
 };
 
-export const getAlljobs = createAsyncThunk(
-  "alljobs/getJobs",
-  async (_, thunkAPI) => {
-    // let url = `/jobs`
-    const {search,searchStatus,searchType,sort,page} = thunkAPI.getState().allJobs
-    // console.log(thunkAPI.getState());
-    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`
-    if(search){
-      url = url + `&search=${search}`
-    }
-    return getAllJobsThunk(url, thunkAPI);
-  },
-);
+export const getAlljobs = createAsyncThunk("alljobs/getJobs", getAllJobsThunk);
 
-export const showStats = createAsyncThunk(
-  "allJobs/showStats",
-  async (_, thunkAPI) => {
-    try {
-      const resp = await customFetch.get("/jobs/stats");
-      console.log(resp.data);
-      return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  },
-);
+export const showStats = createAsyncThunk("allJobs/showStats", showStatsThunk);
 
 const allJobsSlice = createSlice({
   name: "allJObs",
@@ -61,7 +37,7 @@ const allJobsSlice = createSlice({
       state.isLoading = false;
     },
     handleChange: (state, { payload: { name, value } }) => {
-      // state.page = 1;
+      state.page = 1;
       state[name] = value;
     },
     clearFilters: (state) => {
@@ -70,6 +46,7 @@ const allJobsSlice = createSlice({
     changePage: (state, { payload }) => {
       state.page = payload;
     },
+    clearAllJobsState: () => initialState,
   },
 
   extraReducers: (builder) => {
@@ -108,6 +85,7 @@ export const {
   handleChange,
   clearFilters,
   changePage,
+  clearAllJobsState
 } = allJobsSlice.actions;
 
 export default allJobsSlice.reducer;
