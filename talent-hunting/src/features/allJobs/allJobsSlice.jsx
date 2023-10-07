@@ -27,7 +27,13 @@ export const getAlljobs = createAsyncThunk(
   "alljobs/getJobs",
   async (_, thunkAPI) => {
     // let url = `/jobs`
-    return getAllJobsThunk("/jobs", thunkAPI);
+    const {search,searchStatus,searchType,sort,page} = thunkAPI.getState().allJobs
+    // console.log(thunkAPI.getState());
+    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`
+    if(search){
+      url = url + `&search=${search}`
+    }
+    return getAllJobsThunk(url, thunkAPI);
   },
 );
 
@@ -61,6 +67,9 @@ const allJobsSlice = createSlice({
     clearFilters: (state) => {
       return { ...state, ...initialFilterState };
     },
+    changePage: (state, { payload }) => {
+      state.page = payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -93,7 +102,12 @@ const allJobsSlice = createSlice({
   },
 });
 
-export const { showLoading, hideLoading, handleChange, clearFilters } =
-  allJobsSlice.actions;
+export const {
+  showLoading,
+  hideLoading,
+  handleChange,
+  clearFilters,
+  changePage,
+} = allJobsSlice.actions;
 
 export default allJobsSlice.reducer;
