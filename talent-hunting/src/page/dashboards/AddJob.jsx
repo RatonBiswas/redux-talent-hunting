@@ -51,7 +51,10 @@ const AddJob = () => {
       return;
     }
     dispatch(
-      createJob({ position, company, jobLocation, jobType, status, navigate }),
+      createJob({
+        job: { position, company, jobLocation, jobType, status },
+        navigate,
+      }),
     );
   };
 
