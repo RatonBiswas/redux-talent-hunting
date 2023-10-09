@@ -2,15 +2,16 @@ import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { useSelector, useDispatch } from "react-redux";
 // import {} from 'react-router-dom'
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   handleChange,
   clearValue,
   createJob,
-  editJob
+  editJob,
 } from "../../features/job/jobSlice";
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddJob = () => {
   const {
@@ -23,9 +24,10 @@ const AddJob = () => {
     status,
     statusOptions,
     isEditing,
-    createdJobNav,
+    // createdJobNav,
     editJobId,
   } = useSelector((store) => store.job);
+  const navigate = useNavigate();
 
   const { user } = useSelector((store) => store.user);
 
@@ -33,27 +35,24 @@ const AddJob = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!position || !company || !jobLocation) {
-      // toast.error("Please Fill Up All Values");
+      toast.error("Please fill out all fields");
       return;
     }
-    if(isEditing){
+    if (isEditing) {
       dispatch(
         editJob({
           jobId: editJobId,
-          job: {
-            position,
-            company,
-            jobLocation,
-            jobType,
-            status,
-          },
-        })
+          job: { position, company, jobLocation, jobType, status },
+          navigate,
+        }),
       );
       return;
     }
-    dispatch(createJob({ position, company, jobLocation, jobType, status }));
-    
+    dispatch(
+      createJob({ position, company, jobLocation, jobType, status, navigate }),
+    );
   };
 
   const handleJobInput = (e) => {
@@ -68,20 +67,14 @@ const AddJob = () => {
     if (!isEditing) {
       dispatch(handleChange({ name: "jobLocation", value: user.location }));
     }
-
-    // if (createdJobNav) {
-    //   console.log('/all-jobs');
-    //   return <Navigate to="/all-jobs" />;
-    // }
-    
   }, []);
 
   return (
     <Wrapper>
-      <form className="form" onSubmit={handleSubmit}>
-        <h3>{isEditing ? "Edit Job" : "Add Job"}</h3>
+      <form className="form">
+        <h3>{isEditing ? "edit job" : "add job"}</h3>
         <div className="form-center">
-          {/* Position field */}
+          {/* position */}
           <FormRow
             type="text"
             name="position"
@@ -95,24 +88,22 @@ const AddJob = () => {
             value={company}
             handleChange={handleJobInput}
           />
-          {/* location */}
+          {/* jobLocation */}
           <FormRow
             type="text"
-            labelText="job location"
             name="jobLocation"
+            labelText="job location"
             value={jobLocation}
             handleChange={handleJobInput}
           />
-
-          {/* job status */}
+          {/* status */}
           <FormRowSelect
-            name="Status"
+            name="status"
             value={status}
             handleChange={handleJobInput}
             list={statusOptions}
           />
-
-          {/* job type */}
+          {/* job type*/}
           <FormRowSelect
             name="jobType"
             labelText="job type"
@@ -120,23 +111,25 @@ const AddJob = () => {
             handleChange={handleJobInput}
             list={jobTypeOptions}
           />
-
           <div className="btn-container">
             <button
-              type="submit"
+              type="button"
               className="btn btn-block clear-btn"
               onClick={() => dispatch(clearValue())}
             >
-              Clear
+              clear
             </button>
-            <button
-              type="submit"
-              className="btn btn-block submit-btn"
-              // disabled={isLoading}
-            >
-              {isLoading ? "Please Wait..." : "Submit" }
-              {createdJobNav ? <Navigate to='/all-jobs'/> : <Navigate to='/add-job'/>}
-            </button>
+
+            <Link to="/all-jobs">
+              <button
+                type="submit"
+                className="btn btn-block submit-btn"
+                onClick={handleSubmit}
+                disabled={isLoading}
+              >
+                submit
+              </button>
+            </Link>
           </div>
         </div>
       </form>
